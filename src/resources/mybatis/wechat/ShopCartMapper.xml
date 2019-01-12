@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.order.modules.wechat.dao.ShopCartMapper">
+    <resultMap id="BaseResultMap" type="com.order.modules.wechat.entity.ShopCart">
+        <id column="shopcart_id" jdbcType="INTEGER" property="shopcartId"/>
+        <result column="shopcart__user_id" jdbcType="INTEGER" property="shopcartUserId"/>
+        <result column="shopcart_shop_id" jdbcType="INTEGER" property="shopcartShopId"/>
+        <result column="shopcart_product_id" jdbcType="INTEGER" property="shopcartProductId"/>
+        <result column="shopcart_product_type" jdbcType="INTEGER" property="shopcartProductType"/>
+        <result column="shopcart_quantity" jdbcType="INTEGER" property="shopcartQuantity"/>
+        <result column="shopcart_create_time" jdbcType="TIMESTAMP" property="shopcartCreateTime"/>
+        <result column="shopcart_price" jdbcType="DECIMAL" property="shopcartPrice"/>
+        <result column="shopcart_detail" jdbcType="VARCHAR" property="shopcartDetail"/>
+    </resultMap>
+    <!-- 联表 -->
+    <resultMap id="ResultMapUnProduct" type="com.order.modules.wechat.entity.ShopCart" extends="BaseResultMap">
+        <association property="product" javaType="com.order.modules.wechat.entity.ShopCart">
+            <id column="product_id" property="productId" jdbcType="INTEGER"/>
+            <result column="product_shop_id" property="productShopId" jdbcType="INTEGER"/>
+            <result column="product_category_id" property="productCategoryId" jdbcType="INTEGER"/>
+            <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+            <result column="product_code" property="productCode" jdbcType="VARCHAR"/>
+            <result column="product_pic_detail" property="productPicDetail" jdbcType="VARCHAR"/>
+            <result column="product_pic_small" property="productPicSmall" jdbcType="VARCHAR"/>
+            <result column="product_introduce" property="productIntroduce" jdbcType="VARCHAR"/>
+            <result column="product_price" property="productPrice" jdbcType="DECIMAL"/>
+            <result column="product_type" property="productType" jdbcType="INTEGER"/>
+            <result column="product_create_time" property="productCreateTime" jdbcType="TIMESTAMP"/>
+            <result column="product_update_time" property="productUpdateTime" jdbcType="TIMESTAMP"/>
+            <result column="product_state" property="productState" jdbcType="INTEGER"/>
+            <result column="product_stock" property="productStock" jdbcType="INTEGER"/>
+            <result column="product_count" property="productCount" jdbcType="INTEGER"/>
+            <result column="product_hot" property="productHot" jdbcType="INTEGER"/>
+            <result column="product_fans" property="productFans" jdbcType="INTEGER"/>
+            <result column="product_fans_discount" property="productFansDiscount" jdbcType="DOUBLE"/>
+            <result column="product_fans_price" property="productFansPrice" jdbcType="DECIMAL"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+    shopcart_id, shopcart__user_id, shopcart_shop_id, shopcart_product_id, shopcart_product_type, 
+    shopcart_quantity, shopcart_create_time, shopcart_price, shopcart_detail
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from shopcart
+        where shopcart_id = #{shopcartId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shopcart
+    where shopcart_id = #{shopcartId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.order.modules.wechat.entity.ShopCart">
+    insert into shopcart (shopcart_id, shopcart__user_id, shopcart_shop_id, 
+      shopcart_product_id, shopcart_product_type, 
+      shopcart_quantity, shopcart_create_time, 
+      shopcart_price, shopcart_detail)
+    values (#{shopcartId,jdbcType=INTEGER}, #{shopcartUserId,jdbcType=INTEGER}, #{shopcartShopId,jdbcType=INTEGER}, 
+      #{shopcartProductId,jdbcType=INTEGER}, #{shopcartProductType,jdbcType=INTEGER}, 
+      #{shopcartQuantity,jdbcType=INTEGER}, #{shopcartCreateTime,jdbcType=TIMESTAMP}, 
+      #{shopcartPrice,jdbcType=DECIMAL}, #{shopcartDetail,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.order.modules.wechat.entity.ShopCart">
+        insert into shopcart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopcartId != null">
+                shopcart_id,
+            </if>
+            <if test="shopcartUserId != null">
+                shopcart__user_id,
+            </if>
+            <if test="shopcartShopId != null">
+                shopcart_shop_id,
+            </if>
+            <if test="shopcartProductId != null">
+                shopcart_product_id,
+            </if>
+            <if test="shopcartProductType != null">
+                shopcart_product_type,
+            </if>
+            <if test="shopcartQuantity != null">
+                shopcart_quantity,
+            </if>
+            <if test="shopcartCreateTime != null">
+                shopcart_create_time,
+            </if>
+            <if test="shopcartPrice != null">
+                shopcart_price,
+            </if>
+            <if test="shopcartDetail != null">
+                shopcart_detail,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopcartId != null">
+                #{shopcartId,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartUserId != null">
+                #{shopcartUserId,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartShopId != null">
+                #{shopcartShopId,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartProductId != null">
+                #{shopcartProductId,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartProductType != null">
+                #{shopcartProductType,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartQuantity != null">
+                #{shopcartQuantity,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartCreateTime != null">
+                #{shopcartCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shopcartPrice != null">
+                #{shopcartPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="shopcartDetail != null">
+                #{shopcartDetail,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.order.modules.wechat.entity.ShopCart">
+        update shopcart
+        <set>
+            <if test="shopcartUserId != null">
+                shopcart__user_id = #{shopcartUserId,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartShopId != null">
+                shopcart_shop_id = #{shopcartShopId,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartProductId != null">
+                shopcart_product_id = #{shopcartProductId,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartProductType != null">
+                shopcart_product_type = #{shopcartProductType,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartQuantity != null">
+                shopcart_quantity = #{shopcartQuantity,jdbcType=INTEGER},
+            </if>
+            <if test="shopcartCreateTime != null">
+                shopcart_create_time = #{shopcartCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="shopcartPrice != null">
+                shopcart_price = #{shopcartPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="shopcartDetail != null">
+                shopcart_detail = #{shopcartDetail,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where shopcart_id = #{shopcartId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.order.modules.wechat.entity.ShopCart">
+    update shopcart
+    set shopcart__user_id = #{shopcartUserId,jdbcType=INTEGER},
+      shopcart_shop_id = #{shopcartShopId,jdbcType=INTEGER},
+      shopcart_product_id = #{shopcartProductId,jdbcType=INTEGER},
+      shopcart_product_type = #{shopcartProductType,jdbcType=INTEGER},
+      shopcart_quantity = #{shopcartQuantity,jdbcType=INTEGER},
+      shopcart_create_time = #{shopcartCreateTime,jdbcType=TIMESTAMP},
+      shopcart_price = #{shopcartPrice,jdbcType=DECIMAL},
+      shopcart_detail = #{shopcartDetail,jdbcType=VARCHAR}
+    where shopcart_id = #{shopcartId,jdbcType=INTEGER}
+  </update>
+    <select id="getShopCartListByShopIdAndUserId" resultMap="BaseResultMap">
+        SELECT * FROM shopcart
+        LEFT JOIN product ON product_id = shopcart_product_id
+        <if test="categoryShopId != null">
+            shopcart_shop_id = #{categoryShopId}
+        </if>
+        <if test="userId != null">
+            shopcart__user_id = #{userId}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.order.modules.wechat.dao.SpecificationMapper">
+    <resultMap id="BaseResultMap" type="com.order.modules.wechat.entity.Specification">
+        <id column="specification_id" jdbcType="INTEGER" property="specificationId"/>
+        <result column="specification_product_id" jdbcType="INTEGER" property="specificationProductId"/>
+        <result column="specification_key" jdbcType="VARCHAR" property="specificationKey"/>
+        <result column="specification_value" jdbcType="VARCHAR" property="specificationValue"/>
+        <result column="specification_price" jdbcType="DECIMAL" property="specificationPrice"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    specification_id, specification_product_id, specification_key, specification_value, 
+    specification_price
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from specification
+        where specification_id = #{specificationId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from specification
+    where specification_id = #{specificationId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.order.modules.wechat.entity.Specification">
+    insert into specification (specification_id, specification_product_id, 
+      specification_key, specification_value, specification_price
+      )
+    values (#{specificationId,jdbcType=INTEGER}, #{specificationProductId,jdbcType=INTEGER}, 
+      #{specificationKey,jdbcType=VARCHAR}, #{specificationValue,jdbcType=VARCHAR}, #{specificationPrice,jdbcType=DECIMAL}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.order.modules.wechat.entity.Specification">
+        insert into specification
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specificationId != null">
+                specification_id,
+            </if>
+            <if test="specificationProductId != null">
+                specification_product_id,
+            </if>
+            <if test="specificationKey != null">
+                specification_key,
+            </if>
+            <if test="specificationValue != null">
+                specification_value,
+            </if>
+            <if test="specificationPrice != null">
+                specification_price,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specificationId != null">
+                #{specificationId,jdbcType=INTEGER},
+            </if>
+            <if test="specificationProductId != null">
+                #{specificationProductId,jdbcType=INTEGER},
+            </if>
+            <if test="specificationKey != null">
+                #{specificationKey,jdbcType=VARCHAR},
+            </if>
+            <if test="specificationValue != null">
+                #{specificationValue,jdbcType=VARCHAR},
+            </if>
+            <if test="specificationPrice != null">
+                #{specificationPrice,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.order.modules.wechat.entity.Specification">
+        update specification
+        <set>
+            <if test="specificationProductId != null">
+                specification_product_id = #{specificationProductId,jdbcType=INTEGER},
+            </if>
+            <if test="specificationKey != null">
+                specification_key = #{specificationKey,jdbcType=VARCHAR},
+            </if>
+            <if test="specificationValue != null">
+                specification_value = #{specificationValue,jdbcType=VARCHAR},
+            </if>
+            <if test="specificationPrice != null">
+                specification_price = #{specificationPrice,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where specification_id = #{specificationId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.order.modules.wechat.entity.Specification">
+    update specification
+    set specification_product_id = #{specificationProductId,jdbcType=INTEGER},
+      specification_key = #{specificationKey,jdbcType=VARCHAR},
+      specification_value = #{specificationValue,jdbcType=VARCHAR},
+      specification_price = #{specificationPrice,jdbcType=DECIMAL}
+    where specification_id = #{specificationId,jdbcType=INTEGER}
+  </update>
+    <select id="getSpecificationListByProductId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from specification
+        where specification_product_id = #{productId,jdbcType=INTEGER}
+    </select>
+
+</mapper>

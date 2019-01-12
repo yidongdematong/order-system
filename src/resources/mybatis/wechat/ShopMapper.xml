@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.order.modules.wechat.dao.ShopMapper">
+    <resultMap id="BaseResultMap" type="com.order.modules.wechat.entity.Shop">
+        <id column="shop_id" property="shopId" jdbcType="INTEGER"/>
+        <result column="shop_name" property="shopName" jdbcType="VARCHAR"/>
+        <result column="shop_code" property="shopCode" jdbcType="VARCHAR"/>
+        <result column="shop_type" property="shopType" jdbcType="INTEGER"/>
+        <result column="shop_open_state" property="shopOpenState" jdbcType="INTEGER"/>
+        <result column="shop_open_time" property="shopOpenTime" jdbcType="VARCHAR"/>
+        <result column="shop_close_time" property="shopCloseTime" jdbcType="VARCHAR"/>
+        <result column="shop_telephone" property="shopTelephone" jdbcType="VARCHAR"/>
+        <result column="shop_owner" property="shopOwner" jdbcType="VARCHAR"/>
+        <result column="shop_owner_mobile" property="shopOwnerMobile" jdbcType="VARCHAR"/>
+        <result column="shop_province_name" property="shopProvinceName" jdbcType="VARCHAR"/>
+        <result column="shop_province_code" property="shopProvinceCode" jdbcType="VARCHAR"/>
+        <result column="shop_city_name" property="shopCityName" jdbcType="VARCHAR"/>
+        <result column="shop_city_code" property="shopCityCode" jdbcType="VARCHAR"/>
+        <result column="shop_area_name" property="shopAreaName" jdbcType="VARCHAR"/>
+        <result column="shop_area_code" property="shopAreaCode" jdbcType="VARCHAR"/>
+        <result column="shop_address" property="shopAddress" jdbcType="VARCHAR"/>
+        <result column="shop_introduce" property="shopIntroduce" jdbcType="VARCHAR"/>
+        <result column="shop_logo_url" property="shopLogoUrl" jdbcType="VARCHAR"/>
+        <result column="shop_banner_url" property="shopBannerUrl" jdbcType="VARCHAR"/>
+        <result column="shop_listpic_url" property="shopListpicUrl" jdbcType="VARCHAR"/>
+        <result column="shop_notice_url" property="shopNoticeUrl" jdbcType="VARCHAR"/>
+        <result column="shop_long_baidu" property="shopLongBaidu" jdbcType="DOUBLE"/>
+        <result column="shop_lat_baidu" property="shopLatBaidu" jdbcType="DOUBLE"/>
+        <result column="shop_create_time" property="shopCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="shop_update_time" property="shopUpdateTime" jdbcType="TIMESTAMP"/>
+        <result column="shop_rate" property="shopRate" jdbcType="DOUBLE"/>
+        <result column="shop_feedback_count" property="shopFeedbackCount" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    shop_id, shop_name, shop_code, shop_type, shop_open_state, shop_open_time, shop_close_time, 
+    shop_telephone, shop_owner, shop_owner_mobile, shop_province_name, shop_province_code, 
+    shop_city_name, shop_city_code, shop_area_name, shop_area_code, shop_address, shop_introduce, 
+    shop_logo_url, shop_banner_url, shop_listpic_url, shop_notice_url, shop_long_baidu, 
+    shop_lat_baidu, shop_create_time, shop_update_time, shop_rate, shop_feedback_count
+  </sql>
+    <select id="getShopList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM shop
+        WHERE 1=1
+        <if test="cityName != null and cityName != ''">
+            AND shop_city_name LIKE CONCAT('%',#{cityName},'%')
+        </if>
+        ORDER BY shop_id
+        limit #{pager.offset} , #{pager.limit}
+    </select>
+    <select id="getShopListCount" resultMap="BaseResultMap">
+        SELECT
+        COUNT(1)
+        FROM shop
+        WHERE shop_city_name LIKE CONCAT('%',#{cityName},'%')
+    </select>
+
+
+    <select id="getDetail"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM shop
+        WHERE shop_id = #{shopId}
+    </select>
+</mapper>

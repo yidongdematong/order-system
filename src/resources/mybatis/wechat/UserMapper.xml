@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.order.modules.wechat.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.order.modules.wechat.entity.User">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName"/>
+        <result column="user_mobile" jdbcType="VARCHAR" property="userMobile"/>
+        <result column="user_head_url" jdbcType="VARCHAR" property="userHeadUrl"/>
+        <result column="user_type" jdbcType="INTEGER" property="userType"/>
+        <result column="user_open_id" jdbcType="VARCHAR" property="userOpenId"/>
+        <result column="user_sex" jdbcType="INTEGER" property="userSex"/>
+        <result column="user_balance" jdbcType="DECIMAL" property="userBalance"/>
+        <result column="user_frozen_balance" jdbcType="DECIMAL" property="userFrozenBalance"/>
+        <result column="user_create_time" jdbcType="TIMESTAMP" property="userCreateTime"/>
+        <result column="user_fans" jdbcType="INTEGER" property="userFans"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    user_id, user_nick_name, user_mobile, user_head_url, user_type, user_open_id, user_sex, 
+    user_balance, user_frozen_balance, user_create_time, user_fans
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.order.modules.wechat.entity.User">
+    insert into user (user_id, user_nick_name, user_mobile, 
+      user_head_url, user_type, user_open_id, 
+      user_sex, user_balance, user_frozen_balance, 
+      user_create_time, user_fans)
+    values (#{userId,jdbcType=INTEGER}, #{userNickName,jdbcType=VARCHAR}, #{userMobile,jdbcType=VARCHAR}, 
+      #{userHeadUrl,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{userOpenId,jdbcType=VARCHAR}, 
+      #{userSex,jdbcType=INTEGER}, #{userBalance,jdbcType=DECIMAL}, #{userFrozenBalance,jdbcType=DECIMAL}, 
+      #{userCreateTime,jdbcType=TIMESTAMP}, #{userFans,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.order.modules.wechat.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userNickName != null">
+                user_nick_name,
+            </if>
+            <if test="userMobile != null">
+                user_mobile,
+            </if>
+            <if test="userHeadUrl != null">
+                user_head_url,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="userOpenId != null">
+                user_open_id,
+            </if>
+            <if test="userSex != null">
+                user_sex,
+            </if>
+            <if test="userBalance != null">
+                user_balance,
+            </if>
+            <if test="userFrozenBalance != null">
+                user_frozen_balance,
+            </if>
+            <if test="userCreateTime != null">
+                user_create_time,
+            </if>
+            <if test="userFans != null">
+                user_fans,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userNickName != null">
+                #{userNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null">
+                #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userHeadUrl != null">
+                #{userHeadUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="userOpenId != null">
+                #{userOpenId,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                #{userSex,jdbcType=INTEGER},
+            </if>
+            <if test="userBalance != null">
+                #{userBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="userFrozenBalance != null">
+                #{userFrozenBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="userCreateTime != null">
+                #{userCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userFans != null">
+                #{userFans,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.order.modules.wechat.entity.User">
+        update user
+        <set>
+            <if test="userNickName != null">
+                user_nick_name = #{userNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null">
+                user_mobile = #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userHeadUrl != null">
+                user_head_url = #{userHeadUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userType != null">
+                user_type = #{userType,jdbcType=INTEGER},
+            </if>
+            <if test="userOpenId != null">
+                user_open_id = #{userOpenId,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                user_sex = #{userSex,jdbcType=INTEGER},
+            </if>
+            <if test="userBalance != null">
+                user_balance = #{userBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="userFrozenBalance != null">
+                user_frozen_balance = #{userFrozenBalance,jdbcType=DECIMAL},
+            </if>
+            <if test="userCreateTime != null">
+                user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userFans != null">
+                user_fans = #{userFans,jdbcType=INTEGER},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.order.modules.wechat.entity.User">
+    update user
+    set user_nick_name = #{userNickName,jdbcType=VARCHAR},
+      user_mobile = #{userMobile,jdbcType=VARCHAR},
+      user_head_url = #{userHeadUrl,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      user_open_id = #{userOpenId,jdbcType=VARCHAR},
+      user_sex = #{userSex,jdbcType=INTEGER},
+      user_balance = #{userBalance,jdbcType=DECIMAL},
+      user_frozen_balance = #{userFrozenBalance,jdbcType=DECIMAL},
+      user_create_time = #{userCreateTime,jdbcType=TIMESTAMP},
+      user_fans = #{userFans,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+    <select id="getUserById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+</mapper>

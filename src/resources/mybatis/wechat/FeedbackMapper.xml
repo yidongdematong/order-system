@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.order.modules.wechat.dao.FeedbackMapper">
+    <resultMap id="BaseResultMap" type="com.order.modules.wechat.entity.Feedback">
+        <id column="feedback_id" property="feedbackId" jdbcType="INTEGER"/>
+        <result column="feedback_user_id" property="feedbackUserId" jdbcType="INTEGER"/>
+        <result column="feedback_order_id" property="feedbackOrderId" jdbcType="INTEGER"/>
+        <result column="feedback_shop_id" property="feedbackShopId" jdbcType="INTEGER"/>
+        <result column="feedback_shop_name" property="feedbackShopName" jdbcType="VARCHAR"/>
+        <result column="feedback_rate" property="feedbackRate" jdbcType="INTEGER"/>
+        <result column="feedback_comment" property="feedbackComment" jdbcType="VARCHAR"/>
+        <result column="feedback_create_time" property="feedbackCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="feedback_reply" property="feedbackReply" jdbcType="VARCHAR"/>
+        <result column="feedback_tags" property="feedbackTags" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--    <select id="getFeedBackByShopId" resultMap="BaseResultMap">
+        SELECT IFNULL(AVG(feedback_rate),0) FROM feedback WHERE feedback_shop_id = #{shopId,jdbcType=INTEGER}
+      </select>-->
+    <!-- 联表 -->
+    <resultMap id="ResultMapUnUser" type="com.order.modules.wechat.entity.Feedback" extends="BaseResultMap" >
+        <association property="user" javaType="com.order.modules.wechat.entity.User">
+            <id column="user_id" property="userId" jdbcType="INTEGER" />
+            <result column="user_nick_name" property="userNickName" jdbcType="VARCHAR" />
+            <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+            <result column="user_head_url" property="userHeadUrl" jdbcType="VARCHAR" />
+            <result column="user_sex" property="userSex" jdbcType="INTEGER" />
+        </association>
+        <collection property="productName" ofType="java.lang.String">
+            <result column="order_detail_product_name" property="productName" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <select id="getFeedBackByShopId"  resultMap="ResultMapUnUser">
+        SELECT feedback_id, feedback_user_id, feedback_order_id, feedback_shop_id, feedback_shop_name,
+        feedback_rate, feedback_comment, feedback_create_time, feedback_reply, feedback_tags, user_id, user_nick_name,
+        user_mobile, user_head_url, user_sex, order_detail_product_name FROM (
+        SELECT * FROM feedback
+        order by feedback.feedback_id
+        ) a
+        LEFT JOIN `user` ON user_id = feedback_user_id
+        LEFT JOIN order_detail ON order_detail_order_id = feedback_order_id
+    </select>
+
+</mapper>
