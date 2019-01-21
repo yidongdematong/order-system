@@ -1,7 +1,9 @@
 package com.order.modules.wechat.service.impl;
 
+import com.order.modules.wechat.dao.OrderInfoMapper;
 import com.order.modules.wechat.entity.OrderInfo;
 import com.order.modules.wechat.service.OrderInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,11 @@ import java.util.Map;
  */
 @Service
 public class OrderInfoServiceImpl implements OrderInfoService {
+    @Autowired
+    private OrderInfoMapper orderInfoMapper;
+
     @Override
     public List<OrderInfo> getOrderInfoListByShopIdAndUserId(Map<String, Object> paramMaps) {
-        return null;
+        return orderInfoMapper.getOrderInfoListByShopIdAndUserId(paramMaps);
     }
 }
