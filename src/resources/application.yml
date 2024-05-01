@@ -1,10 +1,11 @@
 #Tomcat
 server:
-    tomcat:
+  tomcat:
           uri-encoding: UTF-8
           max-threads: 1000
           min-spare-threads: 30
     port: 8020
+  servlet:
     context-path: /order-system
 #Spring
 spring:
@@ -21,7 +22,7 @@ spring:
 mybatis:
     mapperLocations: classpath:mybatis/**/*.xml
     configLocation: classpath:mybatis.xml
-# 日志
+# 日志 分支提交
 logging:
    path: /home/logs/
    file: ${logging.path}order_system
